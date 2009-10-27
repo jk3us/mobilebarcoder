@@ -51,37 +51,27 @@ mobilebarcode.prefixURL = function(name, type)
 			switch(mobilebarcode.codesize)
 			{
 				case "S":
-					sizenumber="2";
+					sizenumber="120x120";
 				break;
 				case "M":
-					sizenumber="4";
+					sizenumber="175x175";
 				break;
 				case "L":
-					sizenumber="6";
+					sizenumber="230x230";
 				break;
 				case "XL":
-					sizenumber="8";
+					sizenumber="290x290";
 				break;
 				case "XXL":
-					sizenumber="10";
+					sizenumber="350x350";
 				break;
 				default:
-					sizenumber="6";
+					sizenumber="230x230";
 				break;
 			}
-			prefix = "http://mobilecodes.nokia.com/qr?" +
-				"MODULE_SIZE=" + sizenumber;
-<!--
-            if (name.length>0)
-			{
-				prefix = prefix + "&name=" + name;
-			}
-			if (type.length>0)
-			{
-				prefix = prefix + "&TYPE=" + type;
-			}
--->
-			prefix = prefix + "&MARGIN=0&ENCODING=BYTE&MODE=TEXT&a=view&DATA=";
+			prefix = "http://chart.apis.google.com/chart?cht=qr&" +
+				"chs=" + sizenumber;
+			prefix = prefix + "&chl=";
 		break;
 	}
 
