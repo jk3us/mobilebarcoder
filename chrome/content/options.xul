@@ -8,21 +8,9 @@
 	<prefpane id="mobilebarcode-prefs-pane" label="&mobilebarcode.prefs.title;">
 		<preferences>
 			<preference id="pref_size" name="mobilebarcode.size" type="string"/>
-			<preference id="pref_type" name="mobilebarcode.type" type="string"/>
 		</preferences>
 
 		<vbox>
-			<groupbox align="center">
-				<caption label="&mobilebarcode.prefs.style;"/>
-				<radiogroup preference="pref_type" id="type">
-					<radio label="&mobilebarcode.qrcode;" value="QR"
-						src="chrome://mobilebarcode/content/qr.png"
-						accesskey="&mobilebarcode.prefs.qrcode.accesskey;" />
-					<radio label="&mobilebarcode.datamatrix;" value="DM"
-						src="chrome://mobilebarcode/content/dm.png"
-						accesskey="&mobilebarcode.prefs.datamatrix.accesskey;" />
-				</radiogroup>
-			</groupbox>
 			<groupbox align="center">
 				<caption label="&mobilebarcode.prefs.size;"/>
 				<radiogroup preference="pref_size" id="size">

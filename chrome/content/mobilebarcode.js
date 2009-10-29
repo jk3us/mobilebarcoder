@@ -1,79 +1,36 @@
 var mobilebarcode = new Object();
 
 mobilebarcode.prefs = null;
-mobilebarcode.codetype = "";
 mobilebarcode.codesize = "";
 
 //mobilebarcode.prefixURL = "http://mobilecodes.nokia.com/qr?MODULE_SIZE=6&name=&MARGIN=10&ENCODING=BYTE&MODE=TEXT&a=view&DATA=";
 //mobilebarcode.prefixURL = function(size="6", name="", margin="10", type="LINK")
-mobilebarcode.prefixURL = function(name, type)
+mobilebarcode.prefixURL = function()
 {
-	switch(mobilebarcode.codetype)
+	switch(mobilebarcode.codesize)
 	{
-		case "DM":
-			switch(mobilebarcode.codesize)
-			{
-				case "S":
-					sizenumber="5";
-				break;
-				case "M":
-					sizenumber="6";
-				break;
-				case "L":
-					sizenumber="7";
-				break;
-				case "XL":
-					sizenumber="8";
-				break;
-				case "XXL":
-					sizenumber="12";
-				break;
-				default:
-					sizenumber="6";
-				break;
-			}
-			prefix = "http://datamatrix.kaywa.com/img.php?" +
-				"s=" + sizenumber;
-<!--
-            if (name.length>0)
-			{
-				prefix = prefix + "&name=" + name;
-			}
-			if (type.length>0)
-			{
-				prefix = prefix + "&TYPE=" + type;
-			}
--->
-			prefix = prefix + "&d=";
+		case "S":
+			sizenumber="120x120";
 		break;
-		case "QR":
+		case "M":
+			sizenumber="175x175";
+		break;
+		case "L":
+			sizenumber="230x230";
+		break;
+		case "XL":
+			sizenumber="290x290";
+		break;
+		case "XXL":
+			sizenumber="350x350";
+		break;
 		default:
-			switch(mobilebarcode.codesize)
-			{
-				case "S":
-					sizenumber="120x120";
-				break;
-				case "M":
-					sizenumber="175x175";
-				break;
-				case "L":
-					sizenumber="230x230";
-				break;
-				case "XL":
-					sizenumber="290x290";
-				break;
-				case "XXL":
-					sizenumber="350x350";
-				break;
-				default:
-					sizenumber="230x230";
-				break;
-			}
-			prefix = "http://chart.apis.google.com/chart?cht=qr&" +
-				"chs=" + sizenumber;
-			prefix = prefix + "&chl=";
+			sizenumber="230x230";
 		break;
 	}
+	prefix = "http://chart.apis.google.com/chart?cht=qr&" +
+		"chs=" + sizenumber;
+	prefix = prefix + "&chl=";
 
 	return prefix;
 };
@@ -82,22 +39,20 @@ mobilebarcode.getBarcode = function()
 {
 	var theurl = getBrowser().contentWindow.location.href;
 	var barcode = document.getElementById ( 'mobilebarcode-status-image' );
-//	barcode.src = "http://www.sample.org.uk/mobilebarcoder/gen.php?data=" + 
-//					mobilebarcode.URLEncode(theurl);
-	barcode.src = mobilebarcode.prefixURL("","LINK") + URLEncode(theurl);
+	barcode.src = mobilebarcode.prefixURL() + URLEncode(theurl);
 	return;
 };
 
 mobilebarcode.getBarcodeFromSelection = function()
 {
 	var sel_text = get_selected_text();
-	openNewTabWith(mobilebarcode.prefixURL("","") + URLEncode(sel_text), null, null, false);
+	openNewTabWith(mobilebarcode.prefixURL() + URLEncode(sel_text), null, null, false);
 };
 mobilebarcode.showBarcodeFromSelection = function()
 {
 	var sel_text = get_selected_text();
 	image = document.getElementById("mobilebarcode-context-selection-image");
-	image.src = mobilebarcode.prefixURL("","") + URLEncode(sel_text);
+	image.src = mobilebarcode.prefixURL() + URLEncode(sel_text);
 };
 
 mobilebarcode.getBarcodeFromLink = function()
@@ -110,7 +65,7 @@ mobilebarcode.getBarcodeFromLink = function()
 			sel_text = gContextMenu.linkURL()
 		}
 		//var sel_text = gContextMenu.linkURL;
-		openNewTabWith(mobilebarcode.prefixURL("","") + URLEncode(sel_text), null, null, false);
+		openNewTabWith(mobilebarcode.prefixURL() + URLEncode(sel_text), null, null, false);
 	}
 };
 mobilebarcode.showBarcodeFromLink = function()
@@ -123,7 +78,7 @@ mobilebarcode.showBarcodeFromLink = function()
 			sel_text = gContextMenu.linkURL()
 		}
 		image = document.getElementById("mobilebarcode-context-link-image");
-		image.src = mobilebarcode.prefixURL("","") + URLEncode(sel_text);
+		image.src = mobilebarcode.prefixURL() + URLEncode(sel_text);
 	}
 };
 
@@ -135,8 +90,6 @@ mobilebarcode.init = function()
 		.getBranch("mobilebarcode.");
 	mobilebarcode.prefs.QueryInterface(Components.interfaces.nsIPrefBranch2);
 	mobilebarcode.prefs.addObserver("", this, false);
-	
-	mobilebarcode.codetype = mobilebarcode.prefs.getCharPref("type").toUpperCase();
 	
 	menu = document.getElementById("contentAreaContextMenu");
 //	if (menu)
@@ -168,7 +121,6 @@ mobilebarcode.observe = function(subject, topic, data)
 			mobilebarcode.codesize = mobilebarcode.prefs.getCharPref("size").toUpperCase();
 //		break;
 //		case "type":
-			mobilebarcode.codetype = mobilebarcode.prefs.getCharPref("type").toUpperCase();
 //		break;
 //	}
 };
