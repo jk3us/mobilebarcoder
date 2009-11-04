@@ -14,26 +14,26 @@ mobilebarcode.prefixURL = function(name, type)
 			switch(mobilebarcode.codesize)
 			{
 				case "S":
-					sizenumber="0.12";
+					sizenumber="5";
 				break;
 				case "M":
-					sizenumber="0.18";
+					sizenumber="6";
 				break;
 				case "L":
-					sizenumber="0.25";
+					sizenumber="7";
 				break;
 				case "XL":
-					sizenumber="0.50";
+					sizenumber="8";
 				break;
 				case "XXL":
-					sizenumber="0.75";
+					sizenumber="12";
 				break;
 				default:
-					sizenumber="0.18";
+					sizenumber="6";
 				break;
 			}
-			prefix = "http://mobilecodes.nokia.com/dm?" +
-				"X=" + sizenumber;
+			prefix = "http://datamatrix.kaywa.com/img.php?" +
+				"s=" + sizenumber;
 <!--
             if (name.length>0)
 			{
@@ -44,7 +44,7 @@ mobilebarcode.prefixURL = function(name, type)
 				prefix = prefix + "&TYPE=" + type;
 			}
 -->
-			prefix = prefix + "&NDEF_DATA=&MODE=TEXT&a=view&BARCODE=";
+			prefix = prefix + "&d=";
 		break;
 		case "QR":
 		default:
